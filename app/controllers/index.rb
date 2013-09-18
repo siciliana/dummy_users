@@ -1,12 +1,19 @@
-
-
 get '/' do
   # Look in app/views/index.erb
   erb :index
 end
 
 get '/secret_page' do
-  erb :secret_page  
+  if session[:user_id]
+    erb :secret_page  
+  else 
+    redirect '/'
+  end 
+end 
+
+get '/logout' do
+  session.clear
+  redirect '/'
 end 
 
 post '/login' do
@@ -19,6 +26,7 @@ post '/login' do
     redirect "/"
   end 
 end 
+
 
 
 

@@ -1,16 +1,26 @@
-enable :sessions 
+
 
 get '/' do
   # Look in app/views/index.erb
   erb :index
 end
 
-get '/login' do
-  # validate user 
-  # if correct user, set session id = user_id
-  # if not, redirect to '/'
-  erb :login
+get '/secret_page' do
+  erb :secret_page  
 end 
+
+post '/login' do
+  @user = User.find_by_email(params[:email])
+  if @user.id == User.authenticate(params[:email],params[:password])
+    session[:user_id] = @user.id
+    redirect '/secret_page'
+  else 
+    # @errors = "You aren't real."
+    redirect "/"
+  end 
+end 
+
+
 
 ####GET###### 
 # Logging in

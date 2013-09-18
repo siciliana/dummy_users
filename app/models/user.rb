@@ -1,13 +1,14 @@
 class User < ActiveRecord::Base
 
   def self.authenticate(email,password)
-    user = self.find_by_email(email)
+    user = User.find_by_email(email)
     if user != nil
         if user.password == password
-          true 
-        elsif
-          user.email == nil 
-          false
+          # session[:user_id] = user.id
+          return user.id
+        # elsif
+        #   user.email == nil 
+        #   false
         else
           false 
         end 
